@@ -150,3 +150,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# HashiCorp Terraform
+.terraform
+*.tfstate
+*.tfstate.backup
