@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/Cloudground/Cloudground.svg?style=svg)](https://circleci.com/gh/Cloudground/Cloudground)
+
 ## All-in-one
 
 #### Backend:
