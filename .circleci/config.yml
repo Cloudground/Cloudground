@@ -23,11 +23,13 @@ jobs:
       - run: |
           mkdir -p /tmp/output
           go get -u github.com/golang/dep/cmd/dep
-          dep ensure
-      # specify any bash command here prefixed with `run: `
       - run:
           working_directory: go/src/{{REPO_NAME}}
-          command: go build  -o /tmp/output/ignition
+          command: |
+          ./gow.sh dep ensure
+      - run:
+          working_directory: go/src/{{REPO_NAME}}
+          command: ./gow.sh go build  -o /tmp/output
 #      - run: go get -v -t -d ./...
 #      - run: go test -v ./...
       - persist_to_workspace:
@@ -44,20 +46,21 @@ jobs:
 
       - restore_cache:
           keys:
-          - dependencies-{{ checksum "web/package.json" }}
+          - dependencies-{{ checksum "nodejs/package.json" }}
           - dependencies-
 
       - run:
           working_directory: nodejs
           command: |
-            yarn install
+            npm install
       - save_cache:
           paths:
             - nodejs/node_modules
-          key: dependencies-{{ checksum "web/package.json" }}
-      - run:
-          working_directory: nodejs
-          command: yarn ci
+          key: dependencies-{{ checksum "nodejs/package.json" }}
+#      - run:
+#          working_directory: nodejs
+#          command: yarn ci
+
 #      - persist_to_workspace:
 #          root: ~/Cloudground/nodejs/dist
 #          paths:
