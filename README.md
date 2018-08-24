@@ -50,7 +50,7 @@
 - **Clojure** microservice
 
 #### Contracts:
-- **Proto buffers**
+- **Protocol buffers**
 - **Pact**
     
 #### API Gateway:
