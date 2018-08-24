@@ -26,10 +26,13 @@ jobs:
       - run:
           working_directory: go/src/{{REPO_NAME}}
           command: |
+            pwd
             ./gow.sh dep ensure
       - run:
           working_directory: go/src/{{REPO_NAME}}
-          command: ./gow.sh go build  -o /tmp/output
+          command: |
+            pwd
+            ./gow.sh go build  -o /tmp/output
 #      - run: go get -v -t -d ./...
 #      - run: go test -v ./...
       - persist_to_workspace:
