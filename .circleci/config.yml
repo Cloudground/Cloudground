@@ -7,6 +7,7 @@ jobs:
     working_directory: /go/src/github.com/Cloudground/Cloudground
     steps:
       - checkout
+      - setup_remote_docker
       - restore_cache:
           keys:
           - dependencies-{{ checksum "go/src/Cloudground/Gopkg.toml" }}
