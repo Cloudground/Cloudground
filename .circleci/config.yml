@@ -8,6 +8,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
+         docker_layer_caching: true
       - restore_cache:
           keys:
           - dependencies-{{ checksum "go/src/Cloudground/Gopkg.toml" }}
@@ -34,30 +35,30 @@ jobs:
           working_directory: go/src/Cloudground
           command: |
             ./gow.sh go build  -o /tmp/output/Cloudground
-      - restore_cache:
-          keys:
-            - v1-{{ .Branch }}
-          paths:
-            - /caches/app.tar
-      - run:
-          name: Load Docker image layer cache
-          command: |
-            set +o pipefail
-            docker load -i /caches/app.tar | true
+#      - restore_cache:
+#          keys:
+#            - v1-{{ .Branch }}
+#          paths:
+#            - caches/app.tar
+#      - run:
+#          name: Load Docker image layer cache
+#          command: |
+#            set +o pipefail
+#            docker load -i caches/app.tar | true
       - run:
           name: Build Docker image
           working_directory: go/src
           command: |
             docker build -t cloudground/go:$CIRCLE_BRANCH .
-      - run:
-          name: Save Docker image layer cache
-          command: |
-            mkdir -p /caches
-            docker save -o /caches/app.tar app
-      - save_cache:
-          key: v1-{{ .Branch }}-{{ epoch }}
-          paths:
-            - /caches/app.tar
+#      - run:
+#          name: Save Docker image layer cache
+#          command: |
+#            mkdir -p caches
+#            docker save -o caches/app.tar app
+#      - save_cache:
+#          key: v1-{{ .Branch }}-{{ epoch }}
+#          paths:
+#            - /caches/app.tar
       - persist_to_workspace:
           root: /tmp/output
           paths:
@@ -70,6 +71,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
+         docker_layer_caching: true
       - restore_cache:
           keys:
           - dependencies-{{ checksum "nodejs/package.json" }}
