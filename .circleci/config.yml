@@ -21,7 +21,6 @@ jobs:
     steps:
       - checkout
       # specify any bash command here prefixed with `run: `
-      - run: cd go/src/Cloudground
-      - run: go build
+      - run: cd go/src/Cloudground && go build
 #      - run: go get -v -t -d ./...
 #      - run: go test -v ./...
