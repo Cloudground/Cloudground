@@ -7,7 +7,7 @@ jobs:
     working_directory: /go/src/github.com/Cloudground/Cloudground
     steps:
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
          docker_layer_caching: true
       - restore_cache:
           keys:
@@ -70,7 +70,7 @@ jobs:
     working_directory: ~/Cloudground
     steps:
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
          docker_layer_caching: true
       - restore_cache:
           keys:
