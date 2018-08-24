@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudground-spring-deployment
+  labels:
+    app: cloudground-spring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloudground-spring
+  template:
+    metadata:
+      labels:
+        app: cloudground-spring
+    spec:
+      containers:
+      - name: cloudground-spring
+        image: cloudground/spring
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8080
