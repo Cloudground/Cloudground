@@ -3,10 +3,10 @@
 # Check https://circleci.com/docs/2.0/language-go/ for more details
 version: 2
 jobs:
-  build:
+  build-go:
     docker:
       # specify the version
-      - image: circleci/golang:1.10
+      - image: circleci/golang:latest
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -20,7 +20,74 @@ jobs:
     working_directory: /go/src/github.com/{{ORG_NAME}}/{{REPO_NAME}}
     steps:
       - checkout
+      - run: |
+          mkdir -p /tmp/output
+          go get -u github.com/golang/dep/cmd/dep
+          dep ensure
       # specify any bash command here prefixed with `run: `
-      - run: cd go/src/Cloudground && go build
+      - run:
+          working_directory: go/src/{{REPO_NAME}}
+          command: go build  -o /tmp/output/ignition
 #      - run: go get -v -t -d ./...
 #      - run: go test -v ./...
+      - persist_to_workspace:
+          root: /tmp/output
+          paths:
+            - Cloudground
+
+  build-nodejs:
+    docker:
+      - image: circleci/node:8
+    working_directory: ~/Cloudground
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+          - dependencies-{{ checksum "web/package.json" }}
+          - dependencies-
+
+      - run:
+          working_directory: nodejs
+          command: |
+            yarn install
+      - save_cache:
+          paths:
+            - nodejs/node_modules
+          key: dependencies-{{ checksum "web/package.json" }}
+      - run:
+          working_directory: nodejs
+          command: yarn ci
+#      - persist_to_workspace:
+#          root: ~/Cloudground/nodejs/dist
+#          paths:
+#            - index.html
+#            - assets/*
+
+
+workflows:
+  version: 2
+
+  ci:
+    jobs:
+      - build-go
+      - build-nodejs
+#      - package:
+#          requires:
+#            - build-go
+#            - build-nodejs
+
+ship-it:
+    jobs:
+      - build-go:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v.*/
+      - build-node:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v.*/
