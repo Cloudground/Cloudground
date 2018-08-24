@@ -1,6 +1,6 @@
 [![CircleCI](https://circleci.com/gh/Cloudground/Cloudground.svg?style=svg)](https://circleci.com/gh/Cloudground/Cloudground)
 
-## All-in-one
+[![Cloudground Logo](static/cloudground-logo.png)
 
 #### Backend:
 - **Java EE** microservice <3 **Java 9**
