@@ -17,19 +17,19 @@ jobs:
     #### expecting it in the form of
     ####   /go/src/github.com/circleci/go-tool
     ####   /go/src/bitbucket.org/circleci/go-tool
-    working_directory: /go/src/github.com/{{ORG_NAME}}/{{REPO_NAME}}
+    working_directory: /go/src/github.com/Cloudground/Cloudground
     steps:
       - checkout
       - run: |
           mkdir -p /tmp/output
           go get -u github.com/golang/dep/cmd/dep
       - run:
-          working_directory: go/src/{{REPO_NAME}}
+          working_directory: go/src/Cloudground
           command: |
             pwd
             ./gow.sh dep ensure
       - run:
-          working_directory: go/src/{{REPO_NAME}}
+          working_directory: go/src/Cloudground
           command: |
             pwd
             ./gow.sh go build  -o /tmp/output
