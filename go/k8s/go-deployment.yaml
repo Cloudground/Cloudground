@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudground-go-deployment
+  labels:
+    app: cloudground-go
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloudground-go
+  template:
+    metadata:
+      labels:
+        app: cloudground-go
+    spec:
+      containers:
+      - name: cloudground-go
+        image: cloudground-go
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8090
