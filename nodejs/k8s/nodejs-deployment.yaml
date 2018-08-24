@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudground-nodejs-deployment
+  labels:
+    app: cloudground-nodejs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloudground-nodejs
+  template:
+    metadata:
+      labels:
+        app: cloudground-nodejs
+    spec:
+      containers:
+      - name: cloudground-nodejs
+        image: cloudground-nodejs
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8070

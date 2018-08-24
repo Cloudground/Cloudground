@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h1 Status of services
+    p
+      each service in services
+        div= service
+      else
+        div There are no services defined
