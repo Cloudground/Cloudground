@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-express-deployment
+  labels:
+    app: mongo-express
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-express
+  template:
+    metadata:
+      labels:
+        app: mongo-express
+    spec:
+      containers:
+      - name: mongo-express
+        image: mongo-express
+        env:
+        - name: ME_CONFIG_MONGODB_ENABLE_ADMIN
+          value: "true"
+        - name: ME_CONFIG_MONGODB_ADMINUSERNAME
+          value: "main_admin"
+        - name: ME_CONFIG_MONGODB_ADMINPASSWORD
+          value: "cloudground"
+#        - name: ME_CONFIG_MONGODB_SERVER
+#          value: "mongod-0.mongodb-service.default.svc.cluster.local,mongod-1.mongodb-service.default.svc.cluster.local,mongod-2.mongodb-service.default.svc.cluster.local"
+        - name: ME_CONFIG_MONGODB_SERVER
+          value: "mongod-0.mongodb-service.default.svc.cluster.local"
+#        command:
+#          - "mongo-express"
+#          - "-u"
+#          - "${USER}"
+#          - "-p"
+#          - "${PASS}"
+#          - "-d"
+#          - "${DATABASE}"
+#          - "-H"
+#          - "${HOST}"
+#          - "-P"
+#          - "${PORT}"
+        ports:
+        - containerPort: 8081

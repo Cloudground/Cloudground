@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-service-${INSTANCE}
+  labels:
+    name: mongo
+spec:
+  type: NodePort
+  ports:
+  - port: 27017
+    targetPort: 27017
+    nodePort: 3001${INSTANCE}
+  selector:
+    statefulset.kubernetes.io/pod-name: mongod-${INSTANCE}
