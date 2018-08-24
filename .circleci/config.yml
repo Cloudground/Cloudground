@@ -27,21 +27,17 @@ jobs:
           name: Prepare Go wrapper
           working_directory: go/src/Cloudground
           command: |
-            ls -la
             chmod +x gow.sh
-            ls -la
       - run:
           name: Run Go dep
           working_directory: go/src/Cloudground
           command: |
-            ls -la
             ./gow.sh dep ensure
       - run:
           name: Build
           working_directory: go/src/Cloudground
           command: |
-            ls -la
-            ./gow.sh go build  -o /tmp/output
+            ./gow.sh go build  -o /tmp/output/Cloudground
 #      - run: go get -v -t -d ./...
 #      - run: go test -v ./...
       - persist_to_workspace:
