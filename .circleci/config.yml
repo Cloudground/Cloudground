@@ -31,6 +31,7 @@ jobs:
       - save_cache:
           paths:
             - ~/.m2
+            - ~/.gradle
           key: v1-dependencies-{{ checksum "spring/build.gradle" }}
       - run:
           name: Build
