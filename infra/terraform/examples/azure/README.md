@@ -12,5 +12,13 @@
 ## Create the Helloworld sample
 
 * Change to this directory
+* Make sure you are correctly logged in to Azure: `az account show`
+* For the first run, init terraform: `terraform init`
 * Display terraform's plan: `terraform plan`
 * Run the plan: `terraform apply`
+
+## More resources
+
+* Terraform Azure VM module: https://github.com/Azure/terraform-azurerm-vm
+* Terraform configuration for provisioning a Azure Kubernetes Service (AKS) cluster: 
+  https://github.com/anubhavmishra/terraform-azurerm-aks

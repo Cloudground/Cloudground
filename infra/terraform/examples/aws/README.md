@@ -16,5 +16,7 @@ Secret Access Key)
 ## Create the Helloworld sample
 
 * Change to this directory
+* Check AWS CLI configuration: `aws configure list`
+* For the first run, init terraform: `terraform init`
 * Display terraform's plan: `terraform plan`
 * Run the plan: `terraform apply`
