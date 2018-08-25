@@ -20,3 +20,8 @@ Secret Access Key)
 * For the first run, init terraform: `terraform init`
 * Display terraform's plan: `terraform plan`
 * Run the plan: `terraform apply`
+
+## Cleanup
+
+When you are done, you can delete created resources using: `terraform destroy`.
+Note that there is no undo!

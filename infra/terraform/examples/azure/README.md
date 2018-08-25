@@ -17,6 +17,11 @@
 * Display terraform's plan: `terraform plan`
 * Run the plan: `terraform apply`
 
+## Cleanup
+
+When you are done, you can delete created resources using: `terraform destroy`.
+Note that there is no undo!
+
 ## More resources
 
 * Terraform Azure VM module: https://github.com/Azure/terraform-azurerm-vm
