@@ -3,7 +3,8 @@
 Build and push Spring microservice
 ```
 cd Cloudground/spring
-docker build --build-arg JAR_FILE=build/libs/spring-0.0.1.jar -t cloudground-spring .
+# docker build --build-arg JAR_FILE=build/libs/spring-0.0.1.jar -t cloudground-spring .
+docker build -t cloudground-spring .
 docker run -p 8080:8080 cloudground-spring
 ```
 

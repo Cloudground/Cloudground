@@ -1,8 +1,7 @@
 FROM zenika/alpine-kotlin
 
 VOLUME /tmp
-ARG JAR_FILE
-COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+COPY build/libs/spring-*.jar cloudground-spring.jar
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/cloudground-spring.jar"]
 
 EXPOSE 8080

@@ -8,7 +8,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
-class JacksonKotlinTests {
+class JacksonKotlinTest {
 
     private val mapper = jacksonObjectMapper().configure(SerializationFeature.INDENT_OUTPUT, false)
 
