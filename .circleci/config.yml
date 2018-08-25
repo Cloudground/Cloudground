@@ -149,10 +149,12 @@ workflows:
 
   ci:
     jobs:
+      - build-spring
       - build-go
       - build-nodejs
 #      - package:
 #          requires:
+#            - build-spring
 #            - build-go
 #            - build-nodejs
 
