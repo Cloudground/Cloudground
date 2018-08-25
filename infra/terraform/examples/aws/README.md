@@ -10,6 +10,8 @@ Secret Access Key)
   command to be able to use it, especially to use `aws configure`.
   This is not strictly required but recommended over using environment variables for secret keys.
 * Configure access to AWS using `aws configure`
+* If you want tab-complete on the shell, see
+  [AWS CLI command completion](https://docs.aws.amazon.com/cli/latest/userguide/cli-command-completion.html).
 
 ## Create the Helloworld sample
 
