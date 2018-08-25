@@ -19,6 +19,11 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
       - run:
+          name: Prepare Gradle wrapper
+          working_directory: spring
+          command: |
+            chmod +x gradlew
+      - run:
           name: Installing dependencies
           working_directory: spring
           command: |
