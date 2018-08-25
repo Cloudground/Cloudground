@@ -7,7 +7,7 @@
 * Download and install the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)
 * Tab completion should work out of the box in a new shell.
 * Login on the shell using `az login`.
-* Download and install HashiCorp [https://www.terraform.io/downloads.html](Terraform).
+* Download and install HashiCorp [Terraform](https://www.terraform.io/downloads.html).
 
 ## Create the Helloworld sample
 

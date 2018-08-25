@@ -11,7 +11,7 @@ Secret Access Key)
 * Configure access to AWS using `aws configure`. This is not strictly required but _recommended_ over using environment variables for secret keys.
 * If you want tab-complete on the shell, see
   [AWS CLI command completion](https://docs.aws.amazon.com/cli/latest/userguide/cli-command-completion.html).
-* Download and install HashiCorp [https://www.terraform.io/downloads.html](Terraform).
+* Download and install HashiCorp [Terraform](https://www.terraform.io/downloads.html).
 
 ## Create the Helloworld sample
 
