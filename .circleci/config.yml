@@ -1,6 +1,44 @@
 version: 2
 jobs:
 
+  build-infra:
+    docker:
+      - image: circleci/golang:latest
+    working_directory: /go/src/github.com/Cloudground/Cloudground
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "infra/go/src/Cloudground/Gopkg.toml" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+      - run: |
+          mkdir -p /tmp/output
+          go get -u github.com/golang/dep/cmd/dep
+      - run:
+          name: Prepare Go wrapper
+          working_directory: infra/go/src/Cloudground
+          command: |
+            chmod +x gow.sh
+      - run:
+          name: Installing dependencies
+          working_directory: infra/go/src/Cloudground
+          command: |
+            ./gow.sh dep ensure
+      - save_cache:
+          paths:
+            - infra/go/src/Cloudground/vendor
+          key: v1-dependencies-{{ checksum "infra/go/src/Cloudground/Gopkg.toml" }}
+      - run:
+          name: Build
+          working_directory: infra/go/src/Cloudground
+          command: |
+            ./gow.sh go build  -o /tmp/output/Cloudground
+      - persist_to_workspace:
+          root: /tmp/output
+          paths:
+            - Cloudground
+
   build-spring:
     docker:
       - image: circleci/openjdk:8-jdk

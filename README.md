@@ -1,4 +1,7 @@
-[![CircleCI](https://circleci.com/gh/Cloudground/Cloudground.svg?style=svg)](https://circleci.com/gh/Cloudground/Cloudground)
+
+[![GitHub license](https://img.shields.io/github/license/Cloudground/Cloudground.svg)](https://github.com/Cloudground/Cloudground/blob/master/LICENSE)
+[![CircleCI](https://img.shields.io/circleci/project/github/Cloudground/Cloudground/master.svg)](https://circleci.com/gh/Cloudground/Cloudground)
+<!-- [![CircleCI](https://circleci.com/gh/Cloudground/Cloudground.svg?style=svg)](https://circleci.com/gh/Cloudground/Cloudground) -->
 
 ![Cloudground Logo](static/cloudground-logo.png)
 
