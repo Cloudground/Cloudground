@@ -29,7 +29,7 @@ resource azurerm_container_registry "base_cr" {
   }
 }
 
-/* Storage account that we also use to store terraform state. */
+/* Storage account for base. Not yet used. */
 resource azurerm_storage_account "base_sa" {
 
   name = "${var.storage_account_name}"
