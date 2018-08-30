@@ -26,3 +26,12 @@ resource azurerm_storage_account "state_sa" {
     environment = "base"
   }
 }
+
+/** Storage container for terraform state. */
+resource azurerm_storage_container "state_container" {
+
+  name = "${var.storage_container}"
+  resource_group_name = "${azurerm_resource_group.state_rg.name}"
+  storage_account_name = "${azurerm_storage_account.state_sa.name}"
+
+}
