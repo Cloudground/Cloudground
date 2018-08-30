@@ -43,4 +43,26 @@ resource "azurerm_role_assignment" "aks_sp_assignment" {
   principal_id = "${azurerm_azuread_service_principal.aks_sp.id}"
 }
 
+resource "azurerm_azuread_service_principal_password" "aks_client_secret" {
+  service_principal_id = "${azurerm_azuread_service_principal.aks_sp.id}"
+  value = "${random_string.password.result}"
+  end_date = "2020-01-01T01:00:00Z"
+
+  # Really needed?
+  # See https://www.bountysource.com/issues/61241131-azurerm_azuread_service_principal-delay-before-being-usable
+  # wait 30s for server replication before attempting role assignment creation
+  #provisioner "local-exec" {
+  #  command = "sleep 30"
+  #}
+}
+
+/* Password for service principal for kubernetes
+ * Maybe we should use a keeper on the random_string resource?
+ * See: https://www.terraform.io/docs/providers/random/index.html
+ */
+resource "random_string" "password" {
+  length = 36
+  special = false
+}
+
 data "azurerm_subscription" "primary" {}
