@@ -19,6 +19,47 @@ resource "azurerm_resource_group" "aks_rg" {
   }
 }
 
+/* Private key for the kubernetes cluster */
+resource "tls_private_key" "key" {
+  algorithm = "RSA"
+}
+
+resource "azurerm_kubernetes_cluster" "cloudground" {
+  name = "${var.cluster_name}"
+  location = "${azurerm_resource_group.aks_rg.location}"
+  resource_group_name = "${azurerm_resource_group.aks_rg.name}"
+  dns_prefix = "${var.dns_prefix}"
+
+  # Currently 1.9.9 is recommended by azure and automatically selected
+  #kubernetes_version = "1.9.10"
+
+  linux_profile {
+    admin_username = "${var.admin_username}"
+
+    ssh_key {
+      key_data = "${trimspace(tls_private_key.key.public_key_openssh)} ${var.admin_username}@azure.com"
+    }
+  }
+
+  agent_pool_profile {
+    name = "default"
+    count = "${var.agent_count}"
+    vm_size = "${var.agent_vm_size}"
+    os_type = "Linux"
+    os_disk_size_gb = "${var.agent_os_disk_size_gb}"
+  }
+
+  service_principal {
+    /* Note: client_id refers to the application_id, not the object_id of the principal */
+    client_id = "${azurerm_azuread_service_principal.aks_sp.application_id}"
+    client_secret = "${azurerm_azuread_service_principal_password.aks_client_secret.value}"
+  }
+
+  tags {
+    Environment = "aks"
+  }
+}
+
 resource "azurerm_azuread_application" "aks_sp_app" {
   name = "cloudgroundaks"
   homepage = "http://cloudgroundaks"
