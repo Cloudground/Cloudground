@@ -1,4 +1,4 @@
-#Terraform AWS Helloworld
+# Terraform AWS Helloworld
 
 ## Prerequisites
 
@@ -28,6 +28,9 @@ Secret Access Key) in the [IAM section](https://console.aws.amazon.com/iam/) of 
 * For the first run, init terraform: `terraform init`
 * Display terraform's plan: `terraform plan`
 * Run the plan: `terraform apply`
+* You should be able to see the running instance in the 
+  [console](https://console.aws.amazon.com/ec2/v2/home?region=us-east-1).
+* If you access the public IP address of the instance on port 8080, you should see _Hello World!_
 
 ## Cleanup
 
