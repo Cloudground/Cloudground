@@ -8,7 +8,7 @@ provider "azurerm" {
   version = "~> 1.13"
 }
 
-/* Azure resource group base infrastructure: container registry, etc.*/
+/* Azure resource group for AKS.*/
 resource "azurerm_resource_group" "aks_rg" {
 
   name = "${var.resource_group_name}"
