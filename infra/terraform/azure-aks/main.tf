@@ -55,6 +55,17 @@ resource "azurerm_kubernetes_cluster" "cloudground" {
     client_secret = "${azurerm_azuread_service_principal_password.aks_client_secret.value}"
   }
 
+  # For simple ingress quick start, this addon can be enabled.
+  # But according to the comments on the page below, it's really just for a quick start. :-)
+  #  https://docs.microsoft.com/en-us/azure/aks/http-application-routing
+  # Rather read the official documentation for ingres to find out the best way to deploy it.
+  #addon_profile {
+  #  http_application_routing {
+  #    enabled = true
+  #    http_application_routing_zone_name = "..."
+  #  }
+  #}
+
   tags {
     Environment = "aks"
   }
