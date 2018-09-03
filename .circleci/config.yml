@@ -81,7 +81,7 @@ jobs:
           paths:
             - build/*
 
-  push-spring:
+  docker-push-spring:
     docker:
       - image: microsoft/azure-cli:latest
     steps:
@@ -221,11 +221,9 @@ workflows:
       - build-spring
       - build-go
       - build-nodejs
-#      - package:
-#          requires:
-#            - build-spring
-#            - build-go
-#            - build-nodejs
+      - docker-push-spring:
+          requires:
+            - build-spring
 
 ship-it:
     jobs:
