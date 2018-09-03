@@ -76,11 +76,35 @@ jobs:
           working_directory: spring
           command: |
             ./gradlew build
+      - persist_to_workspace:
+          root: spring
+          paths:
+            - build/*
+
+  push-spring:
+    docker:
+      - image: microsoft/azure-cli:latest
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Check workspace
+          working_directory: /tmp/workspace
+          command: |
+            ls -la
       - run:
           name: Build Docker image
           working_directory: spring
           command: |
             docker build -t cloudground/spring:$CIRCLE_BRANCH .
+      - run:
+          name: Login to ACR
+          command: |
+            az login --service-principal --username ${ACR_SP_APP_ID} --password ${ACR_SP_PASSWORD} --tenant ${ACR_TENANT_ID}
+      - run:
+          name: Push Docker image
+          command: |
+            docker push cloudground/spring:$CIRCLE_BRANCH
 
   build-go:
     docker:
