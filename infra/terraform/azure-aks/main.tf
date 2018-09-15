@@ -89,17 +89,6 @@ resource "azurerm_azuread_service_principal" "aks_sp" {
   application_id = "${azurerm_azuread_application.aks_sp_app.application_id}"
 }
 
-
-resource "azurerm_role_assignment" "aks_sp_assignment" {
-  /** Scope assigned to created resource group only: */
-  scope = "${azurerm_resource_group.aks_rg.id}"
-  /** Other scope example: whole subscription. */
-  # scope = "${data.azurerm_subscription.primary.id}"
-
-  role_definition_name = "Contributor"
-  principal_id = "${azurerm_azuread_service_principal.aks_sp.id}"
-}
-
 resource "azurerm_azuread_service_principal_password" "aks_client_secret" {
   service_principal_id = "${azurerm_azuread_service_principal.aks_sp.id}"
   value = "${random_string.password.result}"
@@ -120,6 +109,16 @@ resource "azurerm_azuread_service_principal_password" "aks_client_secret" {
 resource "random_string" "password" {
   length = 36
   special = false
+}
+
+resource "azurerm_role_assignment" "aks_sp_assignment" {
+  /** Scope assigned to created resource group only: */
+  scope = "${azurerm_resource_group.aks_rg.id}"
+  /** Other scope example: whole subscription. */
+  # scope = "${data.azurerm_subscription.primary.id}"
+
+  role_definition_name = "Contributor"
+  principal_id = "${azurerm_azuread_service_principal.aks_sp.id}"
 }
 
 resource "azurerm_role_assignment" "aks_sp_assignment_for_acr" {
