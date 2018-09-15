@@ -20,3 +20,8 @@ variable location {
 variable container_registry_sku {
   default = "Basic"
 }
+
+/* Username created for the CI/CD service to push to the ACR. */
+variable ci_username {
+  default = "circleci"
+}

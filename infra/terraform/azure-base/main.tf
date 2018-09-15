@@ -56,3 +56,52 @@ resource azurerm_storage_account "base_sa" {
     environment = "base"
   }
 }
+
+/* Service principal for CI/CD pipeline service to access ACR. */
+resource "azurerm_azuread_application" "acr_ci_sp_app" {
+  name = "${var.ci_username}"
+  homepage = "http://${var.ci_username}"
+  identifier_uris = [
+    "http://${var.ci_username}"]
+  available_to_other_tenants = false
+  oauth2_allow_implicit_flow = false
+}
+
+resource "azurerm_azuread_service_principal" "acr_ci_sp" {
+  application_id = "${azurerm_azuread_application.acr_ci_sp_app.application_id}"
+}
+
+resource "azurerm_azuread_service_principal_password" "acr_ci_client_secret" {
+  service_principal_id = "${azurerm_azuread_service_principal.acr_ci_sp.id}"
+  value = "${random_string.acr_ci_password.result}"
+  end_date = "2020-01-01T01:00:00Z"
+}
+
+/* Password for service principal */
+resource "random_string" "acr_ci_password" {
+  length = 36
+  special = false
+}
+
+resource "azurerm_role_assignment" "acr_ci_sp_role" {
+  principal_id = "${azurerm_azuread_service_principal.acr_ci_sp.id}"
+  # https://docs.microsoft.com/en-us/azure/container-registry/container-registry-auth-service-principal
+  # reader:      pull only
+  # contributor: push and pull
+  # owner:       push, pull, and assign roles
+  role_definition_name = "Contributor"
+  scope = "${azurerm_container_registry.base_cr.id}"
+}
+
+data "azurerm_client_config" "current" {}
+
+output "ACR_SP_PASSWORD" {
+  value = "${random_string.acr_ci_password.result}"
+  sensitive = true
+}
+output "ACR_SP_APP_ID" {
+  value = "${azurerm_azuread_application.acr_ci_sp_app.application_id}"
+}
+output "ACR_TENANT_ID" {
+  value = "${data.azurerm_client_config.current.tenant_id}"
+}
