@@ -35,6 +35,10 @@ resource azurerm_container_registry "base_cr" {
   tags {
     environment = "base"
   }
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 /* Storage account for base. Not yet used. */
