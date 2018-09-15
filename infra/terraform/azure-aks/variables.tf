@@ -1,8 +1,15 @@
-# Variables
+# References to existing infrastructure
 
+# Reference to container registry
 variable container_registry_name {
   default = "cloudground"
 }
+
+variable container_registry_resource_group {
+  default = "cloudground-base"
+}
+
+# Variables defining managed resources
 
 variable resource_group_name {
   default = "cloudground-aks"
@@ -13,7 +20,7 @@ variable location {
   default = "West Europe"
 }
 
-# AKS kubernetes cluster variables #
+# AKS kubernetes cluster variables
 
 variable cluster_name {
   default = "cloudground"
