@@ -71,11 +71,16 @@ resource "azurerm_kubernetes_cluster" "cloudground" {
   }
 }
 
+locals {
+  /* For service prinicipal name, make sure to use alpha characters only. */
+  cluster_sp_name = "${replace(lower("${var.cluster_name}"), "/[^a-z]/", "")}aks"
+}
+
 resource "azurerm_azuread_application" "aks_sp_app" {
-  name = "cloudgroundaks"
-  homepage = "http://cloudgroundaks"
+  name = "${local.cluster_sp_name}"
+  homepage = "http://${local.cluster_sp_name}"
   identifier_uris = [
-    "http://cloudgroundaks"]
+    "http://${local.cluster_sp_name}"]
   available_to_other_tenants = false
   oauth2_allow_implicit_flow = false
 }
